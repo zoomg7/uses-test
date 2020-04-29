@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { createStyles, makeStyles, Theme, withStyles } from '@material-ui/core/styles'
 import {
   Grid,
@@ -12,6 +13,9 @@ import {
   Chip,
   Button
 } from '@material-ui/core'
+import { RootState } from 'store'
+import { FETCH_PLANS_SUCCESS, Plan } from 'store/plans/types'
+import { useDiContainer } from 'hooks'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -91,18 +95,6 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 )
 
-function createData (id: number, name: string, calories: string, fat: string, carbs: string, protein: string) {
-  return { id, name, calories, fat, carbs, protein }
-}
-
-const rows = [
-  createData(1, 'Frozen yoghurt', '12 months', '$5.910', '$2,235.0', '25%'),
-  createData(2, 'Ice cream sandwich', '12 months', '$5.910', '$2,235.0', '25%'),
-  createData(3, 'Eclair', '24 months', '$5.910', '$2,235.0', '25%'),
-  createData(4, 'Cupcake', '36 months', '$5.910', '$2,235.0', '25%'),
-  createData(5, 'Gingerbread', '12 months', '$5.910', '$2,235.0', '25%'),
-]
-
 const StyledTableCell = withStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -164,6 +156,20 @@ const SecondaryButton = withStyles((theme: Theme) => ({
 
 function App () {
   const classes = useStyles()
+  const { plans } = useSelector((state: RootState) => state.plans)
+  const { planService } = useDiContainer()
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    planService.fetchAll()
+      .then(collection => {
+        dispatch({
+          type: FETCH_PLANS_SUCCESS,
+          plans: collection.data
+        })
+      })
+  }, [])
+
   return (
     <div className={classes.root}>
       <Grid container spacing={3}>
@@ -187,28 +193,28 @@ function App () {
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.map((row) => (
-                <TableRow key={row.id}>
+              {plans.map((plan: Plan) => (
+                <TableRow key={plan.id}>
                   <StyledTableCell component="th" scope="row" className={classes.idColumn}>
                     <div className={classes.firstColumn}>
-                      {row.id}
+                      {plan.id}
                     </div>
                   </StyledTableCell>
                   <StyledTableCell component="th" scope="row" className={classes.supplierColumn}>
-                    <img src="/images/direct.png" alt="" height={20}/>
-                    <div>{row.name}</div>
+                    <img src={plan.supplier.logoSrc} alt="" height={20}/>
+                    <div>{plan.supplier.name}</div>
                   </StyledTableCell>
                   <StyledTableCell>
-                    <Chip label={row.calories} className={classes.termColumnChip}/>
+                    <Chip label={`${plan.month} months`} className={classes.termColumnChip}/>
                   </StyledTableCell>
                   <StyledTableCell>
-                    <Chip label={row.fat} className={classes.priceColumnChip}/>
+                    <Chip label={`$${plan.price}`} className={classes.priceColumnChip}/>
                   </StyledTableCell>
                   <StyledTableCell>
-                    <Chip label={row.carbs} className={classes.savingsColumnChip}/>
+                    <Chip label={`$${plan.estimatedSavings}`} className={classes.savingsColumnChip}/>
                   </StyledTableCell>
                   <StyledTableCell>
-                    <Chip label={row.protein} className={classes.greenEnergyColumnChip}/>
+                    <Chip label={`${plan.greenEnergy}%`} className={classes.greenEnergyColumnChip}/>
                     <PrimaryButton className={classes.lgMargin}>
                       Select plan
                     </PrimaryButton>
