@@ -1,1 +1,1 @@
-export { default as DiProvider } from './DiProvider'
+export { default as StoreProvider } from './StoreProvider'

@@ -1,1 +1,1 @@
-export { default as useDiContainer } from './useDiContainer'
+export { default as useStores } from './useStores'

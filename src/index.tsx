@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { rootReducer } from 'store'
+import { rootReducer, StoreContainer } from 'store'
 import { applyMiddleware, createStore } from 'redux'
 import { Provider } from 'react-redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
@@ -8,23 +8,22 @@ import thunk from 'redux-thunk'
 import './index.css'
 import App from 'containers/App'
 import * as serviceWorker from './serviceWorker'
-import { DiProvider } from 'providers'
-import { DiContainer } from 'utils'
+import { StoreProvider } from 'providers'
 
 const store = createStore(
   rootReducer,
   composeWithDevTools(applyMiddleware(thunk))
 )
 
-const diContainer = new DiContainer()
+const storeContainer = new StoreContainer()
 
 ReactDOM.render(
   <React.StrictMode>
-    <DiProvider diContainer={diContainer}>
+    <StoreProvider storeContainer={storeContainer}>
       <Provider store={store}>
         <App/>
       </Provider>
-    </DiProvider>
+    </StoreProvider>
   </React.StrictMode>,
   document.getElementById('root')
 )

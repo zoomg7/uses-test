@@ -13,7 +13,7 @@ import {
   Chip,
   Button
 } from '@material-ui/core'
-import { useDiContainer } from 'hooks'
+import { useStores } from 'hooks'
 import { RootState } from 'store/types'
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -156,7 +156,7 @@ const SecondaryButton = withStyles((theme: Theme) => ({
 function App () {
   const classes = useStyles()
   const { plans } = useSelector((state: RootState) => state.plans)
-  const { plansStore } = useDiContainer()
+  const { plansStore } = useStores()
   const dispatch = useDispatch()
 
   useEffect(() => {
