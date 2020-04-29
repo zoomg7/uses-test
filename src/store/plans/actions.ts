@@ -5,8 +5,8 @@ import {
   FetchPlansErrorAction,
   FetchPlansRequestAction,
   FetchPlansSuccessAction,
-  Plan
 } from 'store/plans/types'
+import { PlansCollection } from 'services/plans/types'
 
 export function fetchPlansRequest (): FetchPlansRequestAction {
   return {
@@ -14,7 +14,7 @@ export function fetchPlansRequest (): FetchPlansRequestAction {
   }
 }
 
-export function fetchPlansSuccess (plans: Plan[]): FetchPlansSuccessAction {
+export function fetchPlansSuccess (plans: PlansCollection): FetchPlansSuccessAction {
   return {
     type: FETCH_PLANS_SUCCESS,
     plans

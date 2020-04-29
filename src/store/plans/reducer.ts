@@ -8,7 +8,10 @@ import {
 } from 'store/plans/types'
 
 const initialState: PlansState = {
-  plans: [],
+  plans: {
+    data: [],
+    total: 0
+  },
   page: 1,
   pageSize: 10,
   loading: false,

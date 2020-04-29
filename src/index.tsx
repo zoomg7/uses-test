@@ -18,13 +18,11 @@ const store = createStore(
 const storeContainer = new StoreContainer()
 
 ReactDOM.render(
-  <React.StrictMode>
-    <StoreProvider storeContainer={storeContainer}>
-      <Provider store={store}>
-        <App/>
-      </Provider>
-    </StoreProvider>
-  </React.StrictMode>,
+  <StoreProvider storeContainer={storeContainer}>
+    <Provider store={store}>
+      <App/>
+    </Provider>
+  </StoreProvider>,
   document.getElementById('root')
 )
 

@@ -1,14 +1,16 @@
-enum Commodity {
-  ELECTRICITY,
-  GAS
+import { Collection } from 'services/types'
+
+export enum Commodity {
+  ELECTRICITY = 'ELECTRICITY',
+  GAS = 'GAS',
 }
 
-interface Supplier {
+export interface Supplier {
   name: string
   logoSrc: string
 }
 
-interface Plan {
+export interface Plan {
   id: number
   commodity: Commodity
   state: string
@@ -22,12 +24,14 @@ interface Plan {
   estimatedSavings: number
 }
 
-export interface PlansCollection {
-  data: Plan[]
-  total: number
+export interface PlansFilter {
+  commodity?: Commodity,
+  state?: string
 }
 
+export type PlansCollection = Collection<Plan>
+
 export interface PlansServiceInterface {
-  fetchAll (): Promise<PlansCollection>
+  fetchAll (filter?: PlansFilter): Promise<PlansCollection>
 }
 

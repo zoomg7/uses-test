@@ -1,29 +1,7 @@
-export enum Commodity {
-  ELECTRICITY,
-  GAS
-}
-
-export interface Supplier {
-  name: string
-  logoSrc: string
-}
-
-export interface Plan {
-  id: number
-  commodity: Commodity
-  state: string
-  utility: string
-  zone: string
-  rateClass: string
-  supplier: Supplier
-  month: number
-  price: number
-  greenEnergy: number
-  estimatedSavings: number
-}
+import { PlansCollection } from 'services/plans/types'
 
 export interface PlansState {
-  plans: Plan[]
+  plans: PlansCollection
   page: number
   pageSize: number
   loading: boolean
@@ -40,7 +18,7 @@ export interface FetchPlansRequestAction {
 
 export interface FetchPlansSuccessAction {
   type: typeof FETCH_PLANS_SUCCESS
-  plans: Plan[]
+  plans: PlansCollection
 }
 
 export interface FetchPlansErrorAction {

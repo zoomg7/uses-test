@@ -1,4 +1,4 @@
-import { PlansCollection, PlansServiceInterface } from 'services/plans/types'
+import { PlansCollection, PlansFilter, PlansServiceInterface } from 'services/plans/types'
 import { HttpClientInterface } from 'services/http/types'
 
 class PlansService implements PlansServiceInterface {
@@ -9,10 +9,8 @@ class PlansService implements PlansServiceInterface {
     this.http = http
   }
 
-  public async fetchAll (): Promise<PlansCollection> {
-    const { data } = await this.http.get('/plans', {
-      // params: {a: 1000}
-    })
+  public async fetchAll (filter?: PlansFilter): Promise<PlansCollection> {
+    const { data } = await this.http.get('/plans', { filter })
 
     return data
   }

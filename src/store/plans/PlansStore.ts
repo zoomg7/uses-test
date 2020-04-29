@@ -1,4 +1,4 @@
-import { PlansServiceInterface } from 'services/plans/types'
+import { PlansFilter, PlansServiceInterface } from 'services/plans/types'
 import { fetchPlansSuccess } from 'store/plans/actions'
 import { AppThunk } from 'store/types'
 
@@ -10,10 +10,10 @@ class PlansStore {
     this.plansService = plansService
   }
 
-  fetchAll = (): AppThunk => async dispatch => {
+  fetchAll = (filter?: PlansFilter): AppThunk => async dispatch => {
     try {
-      const plansCollection = await this.plansService.fetchAll()
-      dispatch(fetchPlansSuccess(plansCollection.data))
+      const plansCollection = await this.plansService.fetchAll(filter)
+      dispatch(fetchPlansSuccess(plansCollection))
     } catch (e) {
 
     } finally {
