@@ -1,7 +1,9 @@
 import { HttpClientInterface } from 'services/http/types'
-import { PlanServiceInterface } from 'services/plans/types'
+import { PlansServiceInterface } from 'services/plans/types'
+import PlansStore from 'store/plans/PlansStore'
 
 export interface DiContainerInterface {
   readonly httpClient: HttpClientInterface
-  readonly planService: PlanServiceInterface
+  readonly plansService: PlansServiceInterface
+  readonly plansStore: PlansStore
 }

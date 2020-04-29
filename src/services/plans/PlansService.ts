@@ -1,7 +1,7 @@
-import { PlanCollection, PlanServiceInterface } from 'services/plans/types'
+import { PlansCollection, PlansServiceInterface } from 'services/plans/types'
 import { HttpClientInterface } from 'services/http/types'
 
-class PlanService implements PlanServiceInterface {
+class PlansService implements PlansServiceInterface {
 
   private readonly http: HttpClientInterface
 
@@ -9,7 +9,7 @@ class PlanService implements PlanServiceInterface {
     this.http = http
   }
 
-  public async fetchAll (): Promise<PlanCollection> {
+  public async fetchAll (): Promise<PlansCollection> {
     const { data } = await this.http.get('/plans', {
       // params: {a: 1000}
     })
@@ -19,4 +19,4 @@ class PlanService implements PlanServiceInterface {
 
 }
 
-export default PlanService
+export default PlansService

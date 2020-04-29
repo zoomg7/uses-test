@@ -13,9 +13,8 @@ import {
   Chip,
   Button
 } from '@material-ui/core'
-import { RootState } from 'store'
-import { FETCH_PLANS_SUCCESS, Plan } from 'store/plans/types'
 import { useDiContainer } from 'hooks'
+import { RootState } from 'store/types'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -157,17 +156,11 @@ const SecondaryButton = withStyles((theme: Theme) => ({
 function App () {
   const classes = useStyles()
   const { plans } = useSelector((state: RootState) => state.plans)
-  const { planService } = useDiContainer()
+  const { plansStore } = useDiContainer()
   const dispatch = useDispatch()
 
   useEffect(() => {
-    planService.fetchAll()
-      .then(collection => {
-        dispatch({
-          type: FETCH_PLANS_SUCCESS,
-          plans: collection.data
-        })
-      })
+    dispatch(plansStore.fetchAll())
   }, [])
 
   return (
@@ -193,7 +186,7 @@ function App () {
               </TableRow>
             </TableHead>
             <TableBody>
-              {plans.map((plan: Plan) => (
+              {plans.map((plan) => (
                 <TableRow key={plan.id}>
                   <StyledTableCell component="th" scope="row" className={classes.idColumn}>
                     <div className={classes.firstColumn}>

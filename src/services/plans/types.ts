@@ -22,12 +22,12 @@ interface Plan {
   estimatedSavings: number
 }
 
-export interface PlanCollection {
+export interface PlansCollection {
   data: Plan[]
   total: number
 }
 
-export interface PlanServiceInterface {
-  fetchAll (): Promise<PlanCollection>
+export interface PlansServiceInterface {
+  fetchAll (): Promise<PlansCollection>
 }
 

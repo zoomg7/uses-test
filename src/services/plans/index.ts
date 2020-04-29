@@ -1,1 +1,1 @@
-export { default as PlanService } from './PlanService'
+export { default as PlanService } from 'services/plans/PlansService'
