@@ -10,7 +10,7 @@ const StyledTableCell = withStyles((theme: Theme) =>
       color: '#93979B',
       fontSize: 13,
       paddingBottom: 0,
-      padding: '20px 10px',
+      padding: '0 10px 10px',
     },
     body: {
       fontSize: 14,

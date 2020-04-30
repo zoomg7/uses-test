@@ -17,8 +17,6 @@ class HttpMockClient extends HttpClient {
   getPlans = ({ params }: AxiosRequestConfig) => {
     let data = [...plans]
 
-    console.log(params.filter)
-
     if (params && params.filter) {
       const { commodity, state } = params.filter
       if (commodity) {
