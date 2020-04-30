@@ -7,7 +7,7 @@ import {
   PlansState
 } from 'store/plans/types'
 
-const initialState: PlansState = {
+export const initialState: PlansState = {
   plans: {
     data: [],
     total: 0
