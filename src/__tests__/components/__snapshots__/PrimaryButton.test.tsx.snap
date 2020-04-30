@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PrimaryButton should render correctly 1`] = `
+<WithStyles(ForwardRef(Button))
+  classes={
+    Object {
+      "root": "WithStyles(ForwardRef(Button))-root-1",
+    }
+  }
+  onClick={[Function]}
+>
+  My Label
+</WithStyles(ForwardRef(Button))>
+`;
