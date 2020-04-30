@@ -1,8 +1,11 @@
 import React from 'react'
-import { Grid, Paper } from '@material-ui/core'
+import { Grid, Paper, Snackbar } from '@material-ui/core'
 import PlansLeftFilter from 'containers/plans/PlansList/PlansLeftFilter'
 import PlansTable from 'containers/plans/PlansList/PlansTable'
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
+import { Alert } from '@material-ui/lab'
+import { useSelector } from 'react-redux'
+import { RootState } from 'store/types'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -21,9 +24,19 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const PlansList: React.FC = () => {
   const classes = useStyles()
+  const { error } = useSelector((state: RootState) => state.plans)
+  const hasError = !!error
 
   return (
     <div className={classes.root}>
+      <Snackbar
+        open={hasError}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      >
+        <Alert elevation={6} variant="filled" severity="error">
+          {error}
+        </Alert>
+      </Snackbar>
       <Grid container spacing={3}>
         <Grid item xs={3}>
           <Paper className={classes.paper}>

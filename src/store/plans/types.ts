@@ -2,8 +2,6 @@ import { PlansCollection } from 'services/plans/types'
 
 export interface PlansState {
   plans: PlansCollection
-  page: number
-  pageSize: number
   loading: boolean
   error: string
 }

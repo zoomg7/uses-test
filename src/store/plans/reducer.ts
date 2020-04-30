@@ -12,8 +12,6 @@ const initialState: PlansState = {
     data: [],
     total: 0
   },
-  page: 1,
-  pageSize: 10,
   loading: false,
   error: '',
 }
@@ -26,13 +24,15 @@ export const plansReducer: Reducer<PlansState> = (
     case FETCH_PLANS_REQUEST:
       return {
         ...state,
-        loading: true
+        loading: true,
+        error: ''
       }
     case FETCH_PLANS_SUCCESS:
       return {
         ...state,
         loading: false,
-        plans: action.plans
+        plans: action.plans,
+        error: ''
       }
     case FETCH_PLANS_ERROR:
       return {

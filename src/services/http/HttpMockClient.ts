@@ -10,7 +10,7 @@ class HttpMockClient extends HttpClient {
   constructor () {
     super()
 
-    new MockAdapter(this.http)
+    new MockAdapter(this.http, { delayResponse: 1000 })
       .onGet(PLANS_ENDPOINT).reply(this.getPlans)
   }
 
@@ -23,6 +23,9 @@ class HttpMockClient extends HttpClient {
         data = data.filter(item => item.commodity === commodity)
       }
       if (state) {
+        if (state === 'ERROR') {
+          return [HttpStatus.SERVER_ERROR]
+        }
         data = data.filter(item => item.state === state)
       }
     }

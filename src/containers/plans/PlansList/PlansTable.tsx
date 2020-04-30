@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react'
-import { Chip, Table, TableBody, TableHead, TableRow } from '@material-ui/core'
+import { Chip, Table, TableBody, TableHead, TableRow, CircularProgress } from '@material-ui/core'
 import StyledTableCell from 'components/StyledTableCell'
 import { PrimaryButton, SecondaryButton } from 'components'
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from 'store/types'
 import { useStores } from 'hooks'
+
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -72,13 +73,17 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const PlansTable: React.FC = () => {
   const classes = useStyles()
-  const { plans } = useSelector((state: RootState) => state.plans)
+  const { plans, loading } = useSelector((state: RootState) => state.plans)
   const { plansStore } = useStores()
   const dispatch = useDispatch()
 
   useEffect(() => {
     dispatch(plansStore.fetchAll())
   }, [dispatch, plansStore])
+
+  if (loading) {
+    return <CircularProgress/>
+  }
 
   return (
     <Table className={classes.table}>

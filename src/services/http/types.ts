@@ -1,5 +1,6 @@
 export enum HttpStatus {
-  OK = 200
+  OK = 200,
+  SERVER_ERROR = 500
 }
 
 export interface HttpClientInterface {

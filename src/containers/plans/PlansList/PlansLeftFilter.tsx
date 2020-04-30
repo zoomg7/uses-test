@@ -1,9 +1,19 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
-import { Typography, FormControl, InputLabel, Select, MenuItem, Theme } from '@material-ui/core'
+import {
+  Typography,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  Theme,
+  Divider,
+  CircularProgress
+} from '@material-ui/core'
 import { createStyles, makeStyles } from '@material-ui/core/styles'
 import { Commodity, PlansFilter } from 'services/plans/types'
 import { useStores } from 'hooks'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState } from 'store/types'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -16,33 +26,39 @@ const useStyles = makeStyles((theme: Theme) =>
       fontWeight: 'bold',
       color: '#17192C',
     },
+    divider: {
+      margin: '20px 0'
+    }
   }),
 )
 
 const PlansLeftFilter: React.FC = () => {
   const classes = useStyles()
   const { plansStore } = useStores()
+  const { plans, loading } = useSelector((state: RootState) => state.plans)
   const dispatch = useDispatch()
   const [commodity, setCommodity] = useState<string>('')
   const [state, setState] = useState<string>('')
 
   useEffect(() => {
     const filter: PlansFilter = {}
-
     if (commodity) {
       filter.commodity = commodity as Commodity
     }
     if (state) {
       filter.state = state
     }
-    dispatch(plansStore.fetchAll(filter))
+
+    dispatch(plansStore.fetchAll({
+      filter
+    }))
   }, [dispatch, plansStore, commodity, state])
 
-  const commodityChange = (event: ChangeEvent<{ value: unknown }>) => {
+  const onCommodityChange = (event: ChangeEvent<{ value: unknown }>) => {
     setCommodity(event.target.value as string)
   }
 
-  const stateChange = (event: ChangeEvent<{ value: unknown }>) => {
+  const onStateChange = (event: ChangeEvent<{ value: unknown }>) => {
     setState(event.target.value as string)
   }
 
@@ -54,7 +70,7 @@ const PlansLeftFilter: React.FC = () => {
       <InputLabel>Commodity</InputLabel>
       <Select
         value={commodity}
-        onChange={commodityChange}
+        onChange={onCommodityChange}
         label="Commodity"
       >
         <MenuItem value="">
@@ -68,7 +84,7 @@ const PlansLeftFilter: React.FC = () => {
       <InputLabel>State</InputLabel>
       <Select
         value={state}
-        onChange={stateChange}
+        onChange={onStateChange}
         label="State"
       >
         <MenuItem value="">
@@ -76,8 +92,17 @@ const PlansLeftFilter: React.FC = () => {
         </MenuItem>
         <MenuItem value="DC">District Of Columbia</MenuItem>
         <MenuItem value="PA">Pennsylvania</MenuItem>
+        <MenuItem value="AL">Alabama</MenuItem>
+        <MenuItem value="ERROR">Call Error</MenuItem>
       </Select>
     </FormControl>
+    <Divider className={classes.divider}/>
+    {
+      loading ?
+        <CircularProgress size={20}/> :
+        <Typography component="h4">Total: {plans.total}</Typography>
+    }
+
   </>
 }
 

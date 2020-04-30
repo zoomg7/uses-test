@@ -31,7 +31,11 @@ export interface PlansFilter {
 
 export type PlansCollection = Collection<Plan>
 
+export interface FetchAllRequest {
+  filter?: PlansFilter
+}
+
 export interface PlansServiceInterface {
-  fetchAll (filter?: PlansFilter): Promise<PlansCollection>
+  fetchAll (request: FetchAllRequest): Promise<PlansCollection>
 }
 
