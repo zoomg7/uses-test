@@ -10,6 +10,7 @@ import thunk from 'redux-thunk'
 import { rootReducer, StoreContainer } from 'store'
 import plans from 'services/fixtures/plans'
 import { Plan } from 'services/plans/types'
+import StyledTableCell from 'components/StyledTableCell'
 
 configure({
   adapter: new Adapter()
@@ -43,7 +44,7 @@ it('PlansTable should render correctly', async () => {
 
   const thead = wrapper.find('thead')
   const tbody = wrapper.find('tbody')
-  const tr = tbody.find('tr')
+  const rows = tbody.find('tr')
 
   expect(toJson(wrapper)).toMatchSnapshot()
   expect(tbody).toHaveLength(1)
@@ -53,6 +54,18 @@ it('PlansTable should render correctly', async () => {
   expect(thead.contains('Price per kWh')).toBeTruthy()
   expect(thead.contains('Estimated Savings')).toBeTruthy()
   expect(thead.contains('Green Energy')).toBeTruthy()
-  expect(tr).toHaveLength(plans.length)
+  expect(rows).toHaveLength(plans.length)
+
+  rows.forEach((row, i) => {
+    const plan = plans[i]
+    const cells = row.find(StyledTableCell)
+
+    expect(cells.at(0).text().includes(String(plan.id))).toBeTruthy()
+    expect(cells.at(1).text().includes(String(plan.supplier.name))).toBeTruthy()
+    expect(cells.at(2).text().includes(String(plan.month))).toBeTruthy()
+    expect(cells.at(3).text().includes(String(plan.price))).toBeTruthy()
+    expect(cells.at(4).text().includes(String(plan.estimatedSavings))).toBeTruthy()
+    expect(cells.at(5).text().includes(String(plan.greenEnergy))).toBeTruthy()
+  })
 })
 

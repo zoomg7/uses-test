@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from 'store/types'
 import { useStores } from 'hooks'
 
-
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     table: {
